@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, My Anu!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #d4af37; 
+            --secondary-color: #fffafb; 
+            --accent-pink: #e6a4b4; 
+            --deep-rose: #c2185b;
+            --text-dark: #2c2c2c;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Floating Hearts Animation */
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Hero Section */
+        header {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1518133910546-b6c2fb7d79e3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(3rem, 10vw, 6rem);
+            margin: 0;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            animation: fadeInDown 2s ease;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            animation: fadeInUp 2.5s ease;
+        }
+
+        /* Message Section */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .message-box {
+            background: white;
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(230, 164, 180, 0.2);
+            border: 1px solid #fce4ec;
+            position: relative;
+        }
+
+        .message-box::before {
+            content: '❤';
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--secondary-color);
+            font-size: 2rem;
+            color: var(--accent-pink);
+            padding: 0 15px;
+        }
+
+        h2 {
+            color: var(--deep-rose);
+            font-size: 3rem;
+            font-family: 'Dancing Script', cursive;
+            margin-bottom: 30px;
+        }
+
+        .shayari {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.3rem;
+            color: #444;
+            margin: 25px 0;
+            line-height: 1.6;
+        }
+
+        /* Gallery Grid */
+        .gallery-section {
+            background-color: #fff5f7;
+            padding: 80px 20px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        .photo-card {
+            background: white;
+            padding: 12px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .photo-card:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 15px 30px rgba(230, 164, 180, 0.4);
+        }
+
+        .photo-card img, .photo-card video {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        /* Reasons List */
+        .wishes-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .wishes-list li {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--accent-pink);
+            transition: 0.3s;
+        }
+
+        .wishes-list li:hover {
+            background: var(--accent-pink);
+            color: white;
+        }
+
+        /* Button */
+        .btn {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 18px 50px;
+            background: linear-gradient(45deg, var(--accent-pink), var(--deep-rose));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 10px 20px rgba(194, 24, 91, 0.3);
+            transition: 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(194, 24, 91, 0.4);
+        }
+
+        /* Modal */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 2000; 
+            left: 0; top: 0; width: 100%; height: 100%; 
+            background-color: rgba(0,0,0,0.8); 
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 25px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            animation: zoomIn 0.5s;
+        }
+
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        footer {
+            padding: 40px;
+            text-align: center;
+            background: #2c2c2c;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+    </style>
+</head>
+<body>
+
+    <canvas class="hearts" id="canvas"></canvas>
+
+    <header>
+        <h1>Happy Birthday</h1>
+        <div class="subtitle">To the Woman who owns my heart</div>
+    </header>
+
+    <section class="container">
+        <div class="message-box">
+            <h2>My Dearest Anu 💕</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 20px;">
+                They say birthdays are for making wishes, but looking at you, I realize mine already came true. 
+                You aren't just a part of my life; you are the rhythm in my heart and the peace in my soul. 
+                Thank you for being my 11:11 every single day.
+            </p>
+
+            <div class="shayari">
+                "Khuda kaise na fida hota tum par,<br>
+                Tumhe banakar usne khud par bhi sitam kiya hai.<br>
+                Khush-naseeb hain hum jo tum mile humein,<br>
+                Aaj ke din us khuda ne hum par karam kiya hai." 🫶❤️
+            </div>
+
+            <div class="shayari">
+                "Tu hi meri subah, tu hi meri sham hai,<br>
+                Mere hothon pe bas tera hi naam hai.<br>
+                "Zindagi ki har duaa qubool ho gayi,<br>
+                Jab se tum meri zindagi ka hissa ban gayi. <br>
+                Salamat rahe hamesha muskurahat tumhari,<br>
+                Kyuki meri har khushi tumhari khushi se jud gayi."💝
+            </div>
+
+            <p><strong>My Forever Wish🫶❤️.</strong></p>
+        </div>
+    </section>
+
+    <section class="gallery-section">
+        <div class="container" style="padding: 0;">
+            <h2>Captured Moments of Us</h2>
+            <p>Every photo here is a page in our beautiful story...</p>
+            
+            <div class="gallery-grid">
+                <div class="photo-card">
+                    <img src="WhatsApp Image 2026-01-13 at 8.34.26 PM.jpeg" alt="Memory 1">
+                </div>
+                <div class="photo-card">
+                    <img src="WhatsApp Image 2026-01-13 at 8.34.26 PM1.jpeg" alt="Memory 2">
+                </div>
+                 <div class="photo-card">
+                    <img src="WhatsApp Image 2026-01-13 at 8.34.27 PM3.jpeg" alt="Memory 4">
+                </div>
+                <div class="photo-card">
+                    <img src="WhatsApp Image 2026-01-13 at 8.34.27 PM5.jpeg" alt="Memory 5">
+                </div>
+                <div class="photo-card">
+                    <img src="WhatsApp Image 2026-01-13 at 8.46.35 PM.jpeg" alt="Memory 6">
+                </div>
+                <div class="photo-card">
+                    <img src="WhatsApp Image 2026-01-13 at 8.34.26 PM2.jpeg" alt="Memory 3">
+                </div>
+                <div class="photo-card">
+                    <img src="1.jpeg" alt="Memory 3">
+                </div>
+                 <div class="photo-card">
+                    <img src="2.jpeg" alt="Memory 3">
+                </div>
+                 <div class="photo-card">
+                    <img src="3.jpeg" alt="Memory 3">
+                </div>
+                 <div class="photo-card">
+                    <img src="4.jpeg" alt="Memory 3">
+                </div>
+                 <div class="photo-card">
+                    <img src="5.jpeg" alt="Memory 3">
+                </div>
+                 <div class="photo-card">
+                    <img src="6.jpeg" alt="Memory 3">
+                </div>
+                 <div class="photo-card">
+                    <img src="7.jpeg" alt="Memory 3">
+                </div>
+                 <div class="photo-card">
+                    <img src="8.jpeg" alt="Memory 3">
+                </div>
+                 <div class="photo-card">
+                    <img src="9.jpeg" alt="Memory 3">
+                </div>
+                 <div class="photo-card">
+                    <img src="1o.jpeg" alt="Memory 3">
+                </div>
+
+
+                <div class="photo-card">
+                    <video controls>
+                        <source src="1.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="photo-card">
+                    <video controls>
+                        <source src="2.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="photo-card">
+                    <video controls>
+                        <source src="3.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="photo-card">
+                    <video controls>
+                        <source src="4.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="photo-card">
+                    <video controls>
+                        <source src="5.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="photo-card">
+                    <video controls>
+                        <source src="6.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="photo-card">
+                    <video controls>
+                        <source src="7.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="photo-card">
+                    <video controls>
+                        <source src="8.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="photo-card">
+                    <video controls>
+                        <source src="9.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="photo-card">
+                    <video controls>
+                        <source src="10.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="photo-card">
+                    <video controls>
+                        <source src="11.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="photo-card">
+                    <video controls>
+                        <source src="12.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="photo-card">
+                    <video controls>
+                        <source src="13.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="photo-card">
+                    <video controls>
+                        <source src="14.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="photo-card">
+                    <video controls>
+                        <source src="15.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="photo-card">
+                    <video controls>
+                        <source src="16.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="photo-card">
+                    <video controls>
+                        <source src="17.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="photo-card">
+                    <video controls>
+                        <source src="18.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="photo-card">
+                    <video controls>
+                        <source src="19.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+        
+                <div class="photo-card">
+                    <video controls>
+                        <source src="20.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="container">
+        <h2>What You Are To Me</h2>
+        <ul class="wishes-list">
+            <li>✨ Today is all about you, but I feel like I’m the one who got the gift.</li>
+            <li>✨ I hope today shows you even a fraction of how much you're loved.</li>
+            <li>✨ You have a smile that can light up the darkest rooms.</li>
+            <li>✨ Your Heart is My Home: No matter where we are, I feel "at home" the second I’m with you.</li>
+            <li>✨ I still think about that time we went to Lonavala from college... the precious time spent with you.</li>
+            <li>✨ You Are My "Once in a Lifetime": I believe I was meant to find you. You are the best thing that ever happened to me.</li>
+            <li>✨ My Home: In your arms, the whole world disappears.</li>
+            <li>✨ Our Future: I can't wait to grow old with you.</li>
+        </ul>
+        
+        <button class="btn" onclick="openModal()">Open My Heart 🔒💖</button>
+    </section>
+
+    <div id="hugModal" class="modal">
+    <div class="modal-content" style="border: 1px solid #fce4ec; background: linear-gradient(to bottom, #ffffff, #fff5f7);">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        
+        <h2 style="font-size: 2.2rem; margin-bottom: 10px; color: #c2185b;">My Forever❤️</h2>
+        
+        <div style="min-height: 200px; display: flex; align-items: center; justify-content: center;">
+            <img src="123.webp"
+                 alt="Heartfelt Hug" 
+                 style="width: 100%; max-width: 400px; border-radius: 15px; box-shadow: 0 10px 25px rgba(230, 164, 180, 0.5);">
+        </div>
+
+        <p style="margin-top: 20px; font-size: 1.1rem; line-height: 1.6; color: #444; font-family: 'Playfair Display', serif;">
+            "Duniya ki har khushi tere naam kar doon...<br>
+            Teri har takleef ko apne naam kar lu"
+        </p>
+        
+        <p style="font-size: 0.9rem; color: #888; font-style: italic;">
+            (I am sending you the tightest hug ever right now!)
+        </p>
+        
+        <button class="btn" onclick="closeModal()" style="margin-top: 15px; padding: 12px 35px;">I Love You, My Anu!</button>
+    </div>
+</div>
+</div>
+
+    <footer>
+        <p>Made with all my Love by Ayazz for her Anu💖</p>
+        <p style="font-size: 0.9rem; opacity: 0.5 bold black;">To my 11:11 Wish</p>
+    </footer>
+
+    <script>
+    // --- 1. MODAL LOGIC ---
+    var modal = document.getElementById("hugModal");
+
+    function openModal() {
+        modal.style.display = "block";
+        // Optional: Trigger a confetti effect or extra hearts here
+        createHeartShower(); 
+    }
+
+    function closeModal() {
+        modal.style.display = "none";
+    }
+
+    // Close modal if she clicks outside of it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
+
+    // --- 2. FLOATING HEARTS EFFECT ---
+    function createHeart() {
+        const heart = document.createElement('div');
+        heart.classList.add('floating-heart');
+        
+        // Randomize heart appearance
+        heart.innerHTML = ['❤️', '💖', '✨', '🌸', '💕'][Math.floor(Math.random() * 5)];
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+        heart.style.opacity = Math.random() * 0.5 + 0.5;
+        heart.style.position = 'fixed';
+        heart.style.bottom = '-50px';
+        heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+        heart.style.zIndex = '999';
+        heart.style.pointerEvents = 'none';
+        
+        document.body.appendChild(heart);
+
+        // Remove heart after animation finishes
+        setTimeout(() => {
+            heart.remove();
+        }, 5000);
+    }
+
+    // Create hearts every 500ms
+    setInterval(createHeart, 500);
+
+    // --- 3. THE HEARTFELT TYPING EFFECT ---
+    // This makes the text appear as if you are typing it to her live
+    const message = `Every day with you feels like a blessing, Anu. You are my Dua, my best friend, and my forever home. I promise to hold your hand through every high and low. Happy Birthday, my Queen! 👑`;
+    let index = 0;
+    const speed = 50; // Milliseconds per letter
+
+    function typeWriter() {
+        const element = document.getElementById("typewriter-text");
+        if (element && index < message.length) {
+            element.innerHTML += message.charAt(index);
+            index++;
+            setTimeout(typeWriter, speed);
+        }
+    }
+
+    // Start typing when the page loads
+    window.onload = () => {
+        // Create an element for typing if you want to use it
+        // Or just trigger the heart shower
+        console.log("Birthday Page Loaded with Love ❤️");
+    };
+
+    // --- 4. EXTRA ROMANCE: Heart Shower on Hug ---
+    function createHeartShower() {
+        for(let i=0; i<20; i++) {
+            setTimeout(createHeart, i * 100);
+        }
+    }
+</script>
+
+<style>
+    @keyframes moveUp {
+        0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+    }
+    .floating-heart {
+        animation: moveUp linear forwards;
+    }
+</style>
+</body>
+</html>
